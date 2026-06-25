@@ -2,9 +2,8 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Забота + | Прототип</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         // Расширяем палитру Tailwind цветами из логотипа на изображении image_89d388.png
@@ -31,11 +30,14 @@
     </script>
     <style>
         .text-xxs { font-size: 0.65rem; }
+        /* Дополнительная CSS-защита от системного двойного клика для зума на некоторых iOS/Android элементах */
+        button, input, select, a {
+            touch-action: manipulation;
+        }
     </style>
 </head>
-<body class="min-h-screen bg-slate-50 font-sans text-slate-800 pb-24">
+<body class="min-h-screen bg-slate-50 font-sans text-slate-800 pb-24 select-none">
 
-    <!-- ВЕРХНЯЯ ПАНЕЛЬ (HEADER) -->
     <header class="sticky top-0 z-40 border-b border-slate-100 bg-white px-4 py-3 shadow-sm">
         <div class="mx-auto flex max-w-md items-center justify-between">
             <div class="flex items-center gap-2">
@@ -58,10 +60,8 @@
         </div>
     </header>
 
-    <!-- ЭКРАН 1: ГЛАВНАЯ СТРАНИЦА -->
     <div id="screen-home" class="nav-screen mx-auto max-w-md p-4 space-y-6">
         
-        <!-- HERO-БЛОК -->
         <section class="rounded-2xl bg-gradient-to-br from-brandBlue-700 to-brandBlue-800 p-5 text-white shadow-md">
             <h2 class="mb-2 text-xl font-bold leading-snug">Найдите профессиональный уход с заботой и любовью</h2>
             <p class="mb-4 text-xs text-brandBlue-50">Проверенные специалисты для ваших близких</p>
@@ -76,46 +76,37 @@
             </div>
         </section>
 
-        <!-- КАТЕГОРИИ УСЛУГ -->
         <section>
             <div class="mb-3 flex items-center justify-between">
                 <h3 class="text-sm font-bold uppercase tracking-wider text-slate-400">Категории услуг</h3>
                 <button onclick="resetFilter()" id="btn-reset-filter" class="text-xs font-semibold text-brandBlue-600 hidden hover:underline">Сбросить</button>
             </div>
-            <div class="grid grid-cols-2 gap-3">
-                <div onclick="filterByCategory('caregiver')" id="cat-caregiver" class="category-card cursor-pointer rounded-xl p-3 border transition border-slate-100 bg-white hover:border-slate-200">
-                    <span class="text-2xl">👵</span>
-                    <h4 class="mt-2 text-sm font-semibold text-slate-900">Сиделки</h4>
-                    <p class="text-xxs text-slate-400 mt-0.5">2 специалиста</p>
+            <div class="grid grid-cols-3 gap-2">
+                <div onclick="filterByCategory('caregiver')" id="cat-caregiver" class="category-card cursor-pointer rounded-xl p-2.5 border transition border-slate-100 bg-white hover:border-slate-200 text-center">
+                    <span class="text-xl block">👵</span>
+                    <h4 class="mt-1 text-xs font-bold text-slate-900 truncate">Сиделки</h4>
+                    <p class="text-xxs text-slate-400">2 спец.</p>
                 </div>
-                <div onclick="filterByCategory('nurse')" id="cat-nurse" class="category-card cursor-pointer rounded-xl p-3 border transition border-slate-100 bg-white hover:border-slate-200">
-                    <span class="text-2xl">💉</span>
-                    <h4 class="mt-2 text-sm font-semibold text-slate-900">Медсестры</h4>
-                    <p class="text-xxs text-slate-400 mt-0.5">1 специалист</p>
+                <div onclick="filterByCategory('nurse')" id="cat-nurse" class="category-card cursor-pointer rounded-xl p-2.5 border transition border-slate-100 bg-white hover:border-slate-200 text-center">
+                    <span class="text-xl block">💉</span>
+                    <h4 class="mt-1 text-xs font-bold text-slate-900 truncate">Медсестры</h4>
+                    <p class="text-xxs text-slate-400">1 спец.</p>
                 </div>
-                <div onclick="filterByCategory('rehab')" id="cat-rehab" class="category-card cursor-pointer rounded-xl p-3 border transition border-slate-100 bg-white hover:border-slate-200">
-                    <span class="text-2xl">🏃‍♂️</span>
-                    <h4 class="mt-2 text-sm font-semibold text-slate-900">Реабилитация</h4>
-                    <p class="text-xxs text-slate-400 mt-0.5">1 специалист</p>
-                </div>
-                <div onclick="filterByCategory('home')" id="cat-home" class="category-card cursor-pointer rounded-xl p-3 border transition border-slate-100 bg-white hover:border-slate-200">
-                    <span class="text-2xl">🧹</span>
-                    <h4 class="mt-2 text-sm font-semibold text-slate-900">Клининг</h4>
-                    <p class="text-xxs text-slate-400 mt-0.5">1 специалист</p>
+                <div onclick="filterByCategory('home')" id="cat-home" class="category-card cursor-pointer rounded-xl p-2.5 border transition border-slate-100 bg-white hover:border-slate-200 text-center">
+                    <span class="text-xl block">🧹</span>
+                    <h4 class="mt-1 text-xs font-bold text-slate-900 truncate">Клининг</h4>
+                    <p class="text-xxs text-slate-400">1 спец.</p>
                 </div>
             </div>
         </section>
 
-        <!-- СПИСОК СПЕЦИАЛИСТОВ -->
         <section>
             <h3 class="mb-3 text-sm font-bold uppercase tracking-wider text-slate-400" id="list-title">Все специалисты</h3>
             <div class="space-y-3" id="specialists-container">
-                <!-- Рендер через JS -->
-            </div>
+                </div>
         </section>
     </div>
 
-    <!-- ЭКРАН 2: ЗАКАЗЫ -->
     <div id="screen-orders" class="nav-screen mx-auto max-w-md p-4 hidden space-y-4">
         <h2 class="text-xl font-bold text-slate-900">Мои заказы</h2>
         <div class="rounded-xl border border-dashed border-slate-200 bg-white p-8 text-center">
@@ -126,7 +117,6 @@
         </div>
     </div>
 
-    <!-- ЭКРАН 3: ПРОФИЛЬ -->
     <div id="screen-profile" class="nav-screen mx-auto max-w-md p-4 hidden space-y-6">
         <h2 class="text-xl font-bold text-slate-900">Профиль пользователя</h2>
         <div class="flex items-center gap-4 rounded-xl border border-slate-100 bg-white p-4 shadow-sm">
@@ -145,10 +135,8 @@
         </div>
     </div>
 
-    <!-- ДИНАМИЧЕСКОЕ МОДАЛЬНОЕ ОКНО (ПОДРОБНЕЕ) -->
     <div id="details-modal" class="fixed inset-0 z-50 flex items-end justify-center bg-black/50 p-0 sm:items-center sm:p-4 hidden opacity-0 transition-opacity duration-300">
         <div class="w-full max-w-md rounded-t-2xl bg-white p-6 shadow-xl transition-transform duration-300 translate-y-full sm:rounded-2xl sm:translate-y-0">
-            <!-- Шапка модалки -->
             <div class="flex items-start justify-between">
                 <div class="flex gap-4">
                     <img id="modal-img" src="" alt="" class="h-20 w-20 rounded-2xl object-cover bg-slate-100 border border-slate-100">
@@ -167,7 +155,6 @@
                 </button>
             </div>
 
-            <!-- Инфо-блоки -->
             <div class="mt-6 space-y-4">
                 <div class="grid grid-cols-2 gap-3">
                     <div class="rounded-xl bg-slate-50 p-3 border border-slate-100">
@@ -188,12 +175,10 @@
                 <div>
                     <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">Ключевые навыки</h4>
                     <div id="modal-tags" class="flex flex-wrap gap-1.5">
-                        <!-- Навыки -->
-                    </div>
+                        </div>
                 </div>
             </div>
 
-            <!-- Действия -->
             <div class="mt-6 grid grid-cols-2 gap-3">
                 <a id="modal-chat-btn" href="#" class="flex items-center justify-center gap-2 rounded-xl bg-brandBlue-600 py-3 text-sm font-bold text-white hover:bg-brandBlue-700 transition shadow-sm">
                     💬 Написать
@@ -205,7 +190,6 @@
         </div>
     </div>
 
-    <!-- НИЖНЯЯ НАВИГАЦИЯ (BOTTOM NAV BAR) -->
     <nav class="fixed bottom-0 left-0 right-0 z-30 border-t border-slate-100 bg-white/90 backdrop-blur-md px-4 py-2 shadow-[0_-2px_10px_rgba(0,0,0,0.03)]">
         <div class="mx-auto flex max-w-md justify-around text-center">
             <button onclick="switchScreen('home')" id="nav-btn-home" class="nav-btn flex flex-col items-center text-brandBlue-600">
@@ -223,13 +207,12 @@
         </div>
     </nav>
 
-    <!-- СКРИПТЫ С БАЗОЙ ДАННЫХ И ЛОГИКОЙ -->
     <script>
+        // База данных без реабилитологов
         const specialists = [
             { id: 1, category: 'caregiver', name: 'Малика Ахмедова', role: 'Опыт в кардиологии, сиделка', exp: '7 лет', rating: '4.9', reviews: 112, price: '500,000 сум/день', tags: ['Реабилитация', 'Уколы', 'Альцгеймер'], img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200&h=200', bio: 'Специализируюсь на уходе за пожилыми людьми после инфарктов и инсультов. Имею медицинское образование и опыт работы в кардиологическом отделении 5 лет. Ответственная, терпеливая, нахожу подход к любому подопечному.', tg: 'https://t.me/malika_care', phone: 'tel:+998901234501' },
-            { id: 2, category: 'rehab', name: 'Олег Петров', role: 'Медбрат, специалист ЛФК', exp: '5 лет', rating: '4.8', reviews: 84, price: '40,000 сум/час', tags: ['Массаж', 'После инсульта', 'Капельницы'], img: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=200&h=200', bio: 'Занимаюсь физической реабилитацией пациентов на дому. Разрабатываю индивидуальные комплексы упражнений (ЛФК), провожу сеансы восстановительного массажа. Помогаю вернуть подвижность после травм.', tg: 'https://t.me/oleg_rehab', phone: 'tel:+998901234502' },
             { id: 3, category: 'nurse', name: 'Дильноза Умарова', role: 'Старшая медсестра', exp: '10 лет', rating: '5.0', reviews: 196, price: '150,000 сум/выезд', tags: ['Сложные капельницы', 'Перевязки', 'Уколы'], img: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=200&h=200', bio: 'Выполняю медицинские процедуры любой сложности на дому. Постановка капельниц, внутримышечные и внутривенные инъекции, профессиональный уход за послеоперационными швами и сложными ранами. Гарантирую стерильность.', tg: 'https://t.me/dilnoza_nurse', phone: 'tel:+998901234503' },
-            { id: 4, category: 'caregiver', name: 'Зухра Бакиева', role: 'Ночная сиделка, компаньон', exp: '4 года', rating: '4.7', reviews: 43, price: '500,000 сум/день', tags: ['Приготовление еды', 'Гигиена', 'Диабет'], img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200&h=200', bio: 'Оказываю услуги ночного дежурства и дневного присмотра за престарелыми людьми. Контролирую прием лекарств, уровень сахара в крови, помогаю с гигиеническими процедурами и готовлю диетическую пищу.', tg: 'https://t.me/zuhra_care', phone: 'tel:+998901234504' },
+            { id: 4, category: 'caregiver', name: 'Зухра Бакиева', role: 'Ночная сиделка, компаньон', exp: '4 года', rating: '4.7', reviews: 43, price: '500,000 сум/day', tags: ['Приготовление еды', 'Гигиена', 'Диабет'], img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200&h=200', bio: 'Оказываю услуги ночного дежурства и дневного присмотра за престарелыми людьми. Контролирую прием лекарств, уровень сахара в крови, помогаю с гигиеническими процедурами и готовлю диетическую пищу.', tg: 'https://t.me/zuhra_care', phone: 'tel:+998901234504' },
             { id: 5, category: 'home', name: 'Сардор Алиев', role: 'Специалист по клинингу и уборке', exp: '3 года', rating: '4.9', reviews: 67, price: '400,000 сум/выезд', tags: ['Генеральная уборка', 'Окна', 'Эко-средства'], img: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=200&h=200', bio: 'Профессиональная уборка жилых помещений, где проживают пожилые люди или люди с аллергией. Использую исключительно сертифицированные гипоаллергенные эко-средства. Быстро, чисто и безопасно.', tg: 'https://t.me/sardor_clean', phone: 'tel:+998901234505' }
         ];
 
@@ -273,7 +256,6 @@
                                 <span class="text-xxs uppercase tracking-wider text-slate-400 block">Стоимость</span>
                                 <span class="text-sm font-bold text-slate-900">${spec.price}</span>
                             </div>
-                            <!-- Привязываем открытие модального окна по клику -->
                             <button onclick="openModal(${spec.id})" class="rounded-lg bg-brandPeach-500 px-4 py-2 text-xs font-semibold text-white hover:bg-brandPeach-600 transition shadow-sm">Подробнее</button>
                         </div>
                     </div>
@@ -282,12 +264,10 @@
             });
         }
 
-        // ЛОГИКА МОДАЛЬНОГО ОКНА
         function openModal(id) {
             const spec = specialists.find(s => s.id === id);
             if (!spec) return;
 
-            // Заполняем данные в модалке
             document.getElementById('modal-img').src = spec.img;
             document.getElementById('modal-img').alt = spec.name;
             document.getElementById('modal-name').innerText = spec.name;
@@ -298,17 +278,14 @@
             document.getElementById('modal-price').innerText = spec.price;
             document.getElementById('modal-bio').innerText = spec.bio;
 
-            // Рендерим теги навыков
             const tagsContainer = document.getElementById('modal-tags');
             tagsContainer.innerHTML = spec.tags.map(t => `
                 <span class="rounded-md bg-slate-100 px-2.5 py-1 text-xs text-slate-700 font-medium">${t}</span>
             `).join('');
 
-            // Устанавливаем ссылки для кнопок связи
             document.getElementById('modal-chat-btn').href = spec.tg;
             document.getElementById('modal-call-btn').href = spec.phone;
 
-            // Анимация открытия (плавное появление)
             const modal = document.getElementById('details-modal');
             const modalContent = modal.querySelector('.max-w-md');
             
@@ -328,15 +305,13 @@
 
             setTimeout(() => {
                 modal.classList.add('hidden');
-            }, 300); // время совпадает с duration-300 в CSS
+            }, 300);
         }
 
-        // Закрытие по клику на область вокруг модалки
         document.getElementById('details-modal').addEventListener('click', function(e) {
             if (e.target === this) closeModal();
         });
 
-        // ФИЛЬТРЫ И НАВИГАЦИЯ
         function filterByCategory(cat) {
             currentCategory = cat;
             document.querySelectorAll('.category-card').forEach(card => {
@@ -369,7 +344,7 @@
             
             if (currentCategory) {
                 filtered = filtered.filter(s => s.category === currentCategory);
-                const catNames = {caregiver: 'Сиделки', nurse: 'Медсестры', rehab: 'Реабилитация', home: 'Клининг'};
+                const catNames = {caregiver: 'Сиделки', nurse: 'Медсестры', home: 'Клининг'};
                 document.getElementById('list-title').innerText = `Категория: ${catNames[currentCategory]}`;
             } else {
                 document.getElementById('list-title').innerText = 'Все специалисты';
